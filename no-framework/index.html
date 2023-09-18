@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Special Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div class="container">
-    <h1 class="title"> A special page </h1>
-    <h2 class="subtitle"> A very special page</h2>
+    <div class="container" id="app">
+    <div class="columns">
+      <div class="column">
+        <h1 class="title"> A special page</h1>
+        <h2 class="subtitle">A very special page</h2>
+      </div>
+    </div>
     <div class="columns">
         <div class="column">
             <div class="card">
@@ -43,35 +48,76 @@
               </div>
         </div>
         <div class="column">
-            <h3 class="title is-3">A list</h3>
-            <ul>
-                <li>Some item</li>
-                <li>Another item</li>
-                <li>Something else</li>
-            </ul>
+          <article class="panel is-primary">
+            <p class="panel-heading">
+              Primary
+            </p>
+            <p class="panel-tabs">
+              <a class="is-active">All</a>
+              <a>Public</a>
+              <a>Private</a>
+              <a>Sources</a>
+              <a>Forks</a>
+            </p>
+            <div class="panel-block">
+              <p class="control has-icons-left">
+                <input class="input is-primary" type="text" placeholder="Search">
+                <span class="icon is-left">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+              </p>
+            </div>
+            <a class="panel-block is-active">
+              <span class="panel-icon">
+                <i class="fas fa-book" aria-hidden="true"></i>
+              </span>
+              bulma
+            </a>
+            <a class="panel-block">
+              <span class="panel-icon">
+                <i class="fas fa-book" aria-hidden="true"></i>
+              </span>
+              marksheet
+            </a>
+            <a class="panel-block">
+              <span class="panel-icon">
+                <i class="fas fa-book" aria-hidden="true"></i>
+              </span>
+              minireset.css
+            </a>
+            <a class="panel-block">
+              <span class="panel-icon">
+                <i class="fas fa-book" aria-hidden="true"></i>
+              </span>
+              jgthms.github.io
+            </a>
+          </article>
         </div>    
         <div class="column">
-            <h3 class="title is-3">A list</h3>
-                <ul>
-                    <li>Some item</li>
-                    <li>Another item</li>
-                    <li>Something else</li>
-                </ul>
-        </div>
-        <div class="column">
-            <h3 class="title is-3">A list</h3>
-                <ul>
-                    <li>Some item</li>
-                    <li>Another item</li>
-                    <li>Something else</li>
-                </ul>
-        </div>
-        <div class="column">
-            <div class="notification is-success is-light">
-                <strong>Congrats!</strong> You've accomplished something.
-            </div>
+          <div class="notification is-light" :class="x.type" v-for="x in list" v-show="x.open">
+            <button class="delete" @click="x.open = false"></button>
+            {{x.msg}}
+          </div>
         </div>
     </div>   
     </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const {createApp, ref} = Vue 
+      const app = createApp({
+        setup(){
+          const list = ref([
+            {msg: 'Hello World', open:true, type: 'is-success'},
+            {msg: 'Congrats! You did it', open:true, type: 'is-warning'},
+            {msg: 'You are a Vue3 master', open:true, type: 'is-info'},
+            {msg: 'Oop! You did it again', open:true, type: 'is-danger'},
+        ]);
+          return{list}
+        }
+      })
+
+      app.mount('#app')
+
+    </script>
 </body>
 </html>
