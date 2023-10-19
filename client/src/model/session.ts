@@ -13,17 +13,21 @@ export function getSession(){
   return session;
 }
 
-export function login(email: string, password: string): User | null {
-  const user = getUserByEmail(email);
-  if(user && user.password === password){
-    session.user = user;
-    const router = useRouter();
-    router.push(session.redirectUrl || "/");
-    return user;
+export function useLogin(){
+  const router = useRouter();
+  return { 
+    login(email: string, password: string): User | null {
+      const user = getUserByEmail(email);
+      if(user && user.password === password){
+        session.user = user;
+        const router = useRouter();
+        router.push(session.redirectUrl || "/");
+        return user;
+      }
+      return null;
+    },
+    logout(){
+      session.user = null;
+    }
   }
-  return null;
-}
-
-export function logout(){
-  session.user = null;
 }
