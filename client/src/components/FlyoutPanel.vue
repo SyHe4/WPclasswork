@@ -1,15 +1,14 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
-    <div class="flyout">
-        <slot></slot>
-    </div>
+  <div class="flyout">
+    <slot></slot>
+  </div>
 </template>
 
 <style scoped>
-.flyout {
+  .flyout {
     position: fixed;
     height: calc(100vh - 70px);
     width: 20rem;
@@ -20,8 +19,8 @@
     box-shadow: 0 0 1rem #0004;
     transition: right 0.5s ease-in-out;
     z-index: 100;
-}
-.flyout:hover, .flyout.is-active{
+  }
+  .flyout:hover, .flyout.is-active {
     right: 0;
-}
+  }
 </style>

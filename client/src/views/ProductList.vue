@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { getProducts, type Product} from '@/model/products';
+  import 
   const products = ref([] as Product[])
   const isLoading = ref(false)
   isLoading.value = true;
