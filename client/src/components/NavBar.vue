@@ -97,9 +97,3 @@ const isShoppingCartOpen = ref(false);
   border-bottom: 2px solid #00d1b2;
 }
 </style>
-
-.router-link-active {
-  font-weight: bold;
-  border-bottom: 2px solid #00d1b2;
-}
-</style>
