@@ -15,6 +15,7 @@ app
     .use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', '*');
+        res.header('Access-Control-Allow-Headers', '*');
         next();
     })
 
@@ -25,7 +26,13 @@ app
         res.sendFile(path.join( __dirname, '../client/dist/index.html') )
     });
 
-
+app
+    .use((err, res, next) => {
+        console.log(err);
+        res
+            .status(err?.status || 500)
+            .json({message: err?.message || err});
+    })
 
 console.log('1: Trying to start server...');
 
