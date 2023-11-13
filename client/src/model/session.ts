@@ -3,7 +3,6 @@ import { useRouter } from "vue-router"
 import { useToast } from "vue-toastification";
 import * as myFetch from "./myFetch";
 import { type User, getUserByEmail } from "./users";
-import exp from "constants";
 
 const toast = useToast();
 
