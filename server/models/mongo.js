@@ -1,18 +1,13 @@
 
 const { MongoClient } = require('mongodb');
 const uri = process.env.MONGO_URI;
+const DB_NAME = process.env.MONGO_DB_NAME;
 const client = new MongoClient(uri, {});
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    const products = await client.db("amazify").collection("products").find().toArray();
-    console.log({products});
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
+async function connect() {
+  await client.connect();
+  return client.db('amazify');
 }
-run().catch(console.dir);
+module.exports= {
+  connect, ObjectId
+};
