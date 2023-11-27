@@ -1,4 +1,8 @@
 const data = require("../data/users.json");
+const jwt = requre();
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
 /**
  * @returns {User[]} An array of products.
@@ -77,7 +81,7 @@ function register(values) {
  * @param {string} password
  * @returns {User} The created user.
  */
-function login(email, password) {
+async function login(email, password) {
 
   const item = data.users.find(x => x.email === email);
   if(!item) {
@@ -88,7 +92,9 @@ function login(email, password) {
     throw new Error('Wrong password');
   }
 
-  return item;
+  const user = {...item, password: undefined, };
+  const token = await generateJWT(user);
+  return {user, token};
 }
 
 /**
@@ -119,6 +125,30 @@ function remove(id) {
 }
 
 
+function generateJWT(user){
+  return new Promise((resolve, reject) => {
+    jwt.sign(user, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN}, (err, token) => {
+      if(err){
+        reject(err);
+      }else{
+        resolve(token);
+      }
+    });
+  })
+}
+
+function verifyJWT(token){
+  return new Promise((resolve, reject) => {
+    jwt.verify(user, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN}, (err, token) => {
+      if(err){
+        reject(err);
+      }else{
+        reolve(token);
+      }
+    })
+  })
+}
+
 module.exports = {
-  getAll, get, search, create, update, remove, login, register
+  getAll, get, search, create, update, remove, login, register, generateJWT, verifyJWT
 };

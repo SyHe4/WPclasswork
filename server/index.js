@@ -1,4 +1,3 @@
-
 const path = require('path')
 const express = require('express');
 require('dotenv').config();
@@ -8,7 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT ?? 3000;
 
-console.log(`The best class at SUNY New Paltz is $(process.env.BEST_CLASS)`);
+console.log(`The best class at SUNY New Paltz is ${process.env.BEST_CLASS}`);
 
 app
     .use('/', express.static(path.join( __dirname, '../client/dist/') ) )
@@ -30,12 +29,14 @@ app
     });
 
 app
-    .use((err, res, next) => {
-        console.log(err);
+    .use((err, req, res, next) => {
+        console.error(err);
         res
             .status(err?.status || 500)
-            .json({message: err?.message || err});
+            .json({ message: err?.message || err });
     })
+
+
 
 console.log('1: Trying to start server...');
 
