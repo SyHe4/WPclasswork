@@ -1,4 +1,4 @@
-
+###
 POST https://dummyjson.com/products/add
 Content-Type: application/json
 
@@ -17,6 +17,9 @@ http://localhost:3000
 
 ###
 http://localhost:3000/api/v1/products
+
+###
+POST http://localhost:3000/api/v1/products/seed
 
 ###
 POST http://localhost:3000/api/v1/products
@@ -48,7 +51,7 @@ https://newpaltz-fall-2023.onrender.com/api/v1/products/28
 // Users
 
 ###
-http://localhost:3000/api/v1/users
+http://localhost:3000/api/v1/products
 
 ###
 POST http://localhost:3000/api/v1/users
