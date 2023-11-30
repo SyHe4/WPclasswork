@@ -3,6 +3,7 @@ const express = require('express');
 require('dotenv').config();
 const productController = require('./controllers/products');
 const userController = require('./controllers/users');
+const { parseAuthorizationToken } = require('./middleware/authorization');
 const app = express();
 
 const PORT = process.env.PORT ?? 3000;
@@ -18,16 +19,15 @@ app
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', '*');
         res.header('Access-Control-Allow-Headers', '*');
+        if(req.method === 'OPTIONS'){
+            return res.send(200);
+        }
         next();
     })
 
-    .use((req, res, next) => {
-        console.log(`Request: ${req.method} ${req.url}`);
-        console.log(`Authorization: ${req.headers.authorization}`);
-        next();
-    })
+    .use(parseAuthorizationToken)
 
-    .use('/api/v1/products', productController)
+    .use('/api/v1/products', requireUser(), productController)
     .use('/api/v1/users', userController)
 
     .get('*', (req, res) => {

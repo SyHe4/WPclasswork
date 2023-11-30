@@ -2,17 +2,17 @@ const express = require('express');
 const { getAll, get, search, create, update, remove, login, register } = require('../models/users');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', requireUser(true), (req, res, next) => {
 
     res.send(getAll());
 
 })
-.get('/search' , (req, res, next) => {
+.get('/search' , requireUser(), (req, res, next) => {
 
     const results = search(req.query.q);
     res.send(results);
 })
-.get('/:id', (req, res, next) => {
+.get('/:id', requireUser(), (req, res, next) => {
 
     const user = get(+req.params.id);
     res.send( user );
@@ -39,14 +39,20 @@ router.get('/', (req, res, next) => {
     .catch(next);
 
 })
-.patch('/:id', (req, res, next) => {
+.patch('/:id', requireUser(), (req, res, next) => {
     
+    if(req.user.id !== req.params.id && !req.user.admin){
+        return next({
+            status: 403,
+            message: 'You can only edit your own account (Unless you are an admin)'
+        });
+    }
     req.body.id = +req.params.id;
     const user = update(req.body);
     res.send(user);
   
 })
-.delete('/:id', (req, res, next) => {
+.delete('/:id', requireUser(true), (req, res, next) => {
     
     remove(+req.params.id);
     res.send({message: 'User removed'});
