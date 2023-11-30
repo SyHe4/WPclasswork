@@ -1,5 +1,5 @@
 const data = require("../data/users.json");
-const jwt = requre();
+const jwt = requre('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -139,11 +139,11 @@ function generateJWT(user){
 
 function verifyJWT(token){
   return new Promise((resolve, reject) => {
-    jwt.verify(user, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN}, (err, token) => {
+    jwt.verify(token, JWT_SECRET, (err, user) => {
       if(err){
         reject(err);
       }else{
-        reolve(token);
+        reolve(user);
       }
     })
   })
