@@ -7,7 +7,7 @@ module.exports = {
         if(!token){
             return next();
         }
-        const payload = usersModel.verifyJWT(token);
+        const payload =  usersModel.verifyJWT(token);
         req.token = payload;
         next();
     },
